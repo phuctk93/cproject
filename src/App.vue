@@ -1,47 +1,23 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer
-      v-model="drawer"
-      fixed
-      app
-    >
-      <v-list dense>
-        <v-list-tile @click="$router.push('/')">
-          <v-list-tile-action>
-            <v-icon>home</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Home</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile @click="$router.push('/about')">
-          <v-list-tile-action>
-            <v-icon>contact_mail</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Contact</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
-    <v-toolbar color="indigo" dark fixed app>
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title>Application</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn>USER PROFILE</v-btn>
-    </v-toolbar>
-    <v-content>
-      <v-container grid-list-md>
-        <router-view />
-      </v-container>
-    </v-content>
+    <router-view />
+    <v-snackbar v-model="$store.state.notify.show" :color="$store.state.notify.type" :timeout="3000">
+      {{$store.state.notify.mess}}
+      <v-btn
+        flat
+        @click="$store.state.notify.show = false"
+      >
+        Close
+      </v-btn>
+    </v-snackbar>
   </v-app>
 </template>
 
 <script>
   export default {
     data: () => ({
-      drawer: null
+      drawer: null,
+
     }),
     props: {
       source: String
