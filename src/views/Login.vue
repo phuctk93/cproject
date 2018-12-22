@@ -47,7 +47,7 @@ export default {
 			if (this.user.name == "test" && this.user.pass == "test") {
 				this.$store.state.token = "yeye"
 				this.$store.state.user.name = this.user.name
-				this.$store.state.user.photo = "https://randomuser.me/api/portraits/men/85.jpg"
+				this.$store.state.user.photo = require("../assets/bear_avatar.png")
 				this.$store.commit("showNotify", {type: "success", mess: "Successful!"})
 				this.$router.push("/overview")
 			} else {

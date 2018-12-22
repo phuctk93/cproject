@@ -77,10 +77,6 @@ export default {
 					{ text: 'Last Updated', value: 'updated' },
 		]
 	}),
-	mounted() {
-		this.tableItems = []
-		this.fakeGetData(5)
-	},
 	watch: {
     pagination: {
       handler () {

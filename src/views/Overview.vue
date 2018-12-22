@@ -11,7 +11,7 @@
               <v-icon>{{ e.show ? 'remove' : 'add' }}</v-icon>
             </v-btn>
             </v-card-title>
-          <v-card-text v-if="e.name == 'Manpower' && e.show">
+          <v-card-text v-if="e.name == 'Manpower' && e.show" id="manpower">
             <barchart
               v-for="(chart, i) in manpower.charts"
               :key="'chart' + i"
@@ -23,13 +23,14 @@
           </v-card-text>
           <v-card-text v-else-if="e.name == 'Muster' && e.show">
             <v-layout wrap>
-              <v-flex v-for="(chart, i) in muster.charts" :key="'meter' + i" xs12 md3>
+              <v-flex v-for="(chart, i) in muster.charts" :key="'meter' + i" :class="'xs' + chart.size">
                 <meterchart 
                   :title="chart.title"
                   :max="chart.max"
                   :present="chart.present"
                   :away="chart.away"
                   :color="chart.color"
+                  @click="changeMeter(i)"
                 ></meterchart>
               </v-flex>
             </v-layout>
@@ -82,38 +83,50 @@
             values: [20, 10, 30],
             range: [0, 100],
             labels: ["position 1", "position 2", "position 3"]
+          },
+          {
+            title: "Chart 3",
+            values: [20, 10, 30],
+            range: [0, 100],
+            labels: ["position 1", "position 2", "position 3"]
           }
         ]
       },
       muster: {
+        currentSelect: 0,
+        oldSelect: 0,
         charts: [
           {
             title: "HU 1",
             max: 100,
             present: 80,
             away: 50,
-            color: "#99f"
+            color: "#99f",
+            size: 3
           },
           {
             title: "HU 2",
             max: 100,
             present: 50,
             away: 45,
-            color: "#9f9"
+            color: "#9f9",
+            size: 3
           },
           {
             title: "HU 3",
             max: 100,
             present: 90,
             away: 50,
-            color: "#f99"
+            color: "#f99",
+            size: 3
           },
           {
             title: "HU 4",
             max: 100,
             present: 100,
             away: 50,
-            color: "#9ff"
+            color: "#9ff",
+            size: 3
           },
         ]
       }
@@ -126,6 +139,17 @@
         } else {
           e.size = e.min_size
         }
+      },
+      changeMeter(index) {
+        var m = this.muster
+        this.numbers[1].size = 12
+        if (index == m.currentSelect) {
+          return
+        }
+        m.oldSelect = m.currentSelect
+        m.currentSelect = index
+        m.charts[m.oldSelect].size = 3
+        m.charts[m.currentSelect].size = 12
       }
     }
   }
@@ -139,5 +163,6 @@
 .list-complete-enter, .list-complete-leave-active {
   opacity: 0;
 }
+
 </style>
 

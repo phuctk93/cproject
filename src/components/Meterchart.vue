@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="m-chart" @click="$emit('click')">
 		<svg class="meter" xmlns="http://www.w3.org/2000/svg"
     preserveAspectRatio="none"
     viewBox="0 0 240 200">
@@ -18,7 +18,7 @@
 		</g>
 
 		<text class="total" x="50%" y="150" fill="red" text-anchor="middle">{{total}}</text>
-		<text x="50%" y="180" fill="red" text-anchor="middle">{{title}}</text>
+		<text class="title" x="50%" y="180" fill="red" text-anchor="middle">{{title}}</text>
 
 		</svg>
 	</div>
@@ -58,6 +58,11 @@ export default {
 }
 
 .meter text.total{
+	font-size: 3rem;
+	font-weight: bold;
+}
+
+.meter text.title{
 	font-size: 2rem;
 	font-weight: bold;
 }

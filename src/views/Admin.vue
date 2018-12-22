@@ -92,3 +92,10 @@
 		}
   }
 </script>
+
+<style>
+#manpower {
+  max-height: 70vh;
+  overflow-y: auto
+}
+</style>
