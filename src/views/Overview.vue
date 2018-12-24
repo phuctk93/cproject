@@ -35,6 +35,25 @@
               </v-flex>
             </v-layout>
           </v-card-text>
+          <v-card-text v-else-if="e.name == 'Map and activity' && e.show">
+            <v-layout wrap>
+              <v-flex xs12 md2>
+                <v-layout wrap>
+                  <v-flex v-for="(btn, i) in 9" :key="'a-btn' + i">
+                    <v-btn class="primary" v-text="'Level' + i"></v-btn>
+                  </v-flex>
+                </v-layout>
+              </v-flex>
+              <v-flex xs12 md6>
+                <dragcamera
+                @click="activity.dialog = true"
+                :cameras="activity.cameras"
+                :circles="activity.circles">
+                </dragcamera>
+              </v-flex>
+              <v-flex xs12 md4></v-flex>
+            </v-layout>
+          </v-card-text>
           <v-card-text v-else-if="e.show">
             {{e.content}}
           </v-card-text>
@@ -42,6 +61,23 @@
       </v-flex>
     </transition-group>
   </draggable>
+  <v-dialog v-model="activity.dialog">
+    <v-card>
+      <v-card-title>
+        <v-spacer></v-spacer>
+        <v-btn icon @click="activity.dialog = false">
+          <v-icon>close</v-icon>
+        </v-btn>
+      </v-card-title>
+      <v-card-text>
+        <dragcamera
+        :editable="true"
+        :cameras="activity.cameras"
+        :circles="activity.circles">
+        </dragcamera>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
   </div>
 </template>
 
@@ -49,11 +85,13 @@
   import draggable from 'vuedraggable'
   import barchart from '../components/Barchart.vue'
   import meterchart from '../components/Meterchart.vue'
+  import dragcamera from '../components/DragCamera.vue'
   export default {
     components: {
       draggable,
       barchart,
-      meterchart
+      meterchart,
+      dragcamera
     },
     data: () => ({
       numbers: [
@@ -62,7 +100,7 @@
         {id: 2, name: "Muster", content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
         show: false, size: 6, min_size: 6, max_size: 6},
         {id: 3, name: "Map and activity", content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        show: false, size: 6, min_size: 6, max_size: 6},
+        show: false, size: 6, min_size: 6, max_size: 12},
         {id: 4, name: "Incident", content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
         show: false, size: 6, min_size: 6, max_size: 6},
         {id: 5, name: "Victims", content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of de Finibus Bonorum et Malorum (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance.",
@@ -129,7 +167,21 @@
             size: 3
           },
         ]
-      }
+      },
+      activity: {
+        dialog: false,
+        cameras: [{id: 0, link: "", cid: 0}],
+        //Thanks for public viedo link at https://gist.github.com/jsturgis/3b19447b304616f18657
+        circles: [
+          {x: -61.10059, y: 36.291668, signed: false, fill: "#fff", video: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"},
+          {x: -67.148209, y: 203.35715, signed: false, fill: "#fff", video: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"},
+          {x: 264.7149, y: 167.07143, signed: false, fill: "#fff", video: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"},
+          {x: 4.6672826, y: 220.74405, signed: false, fill: "#fff", video: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"},
+          {x: 75.726807, y: 143.63692, signed: false, fill: "#fff", video: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"},
+          {x: 177.02443, y: 63.505955, signed: false, fill: "#fff", video: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"},
+          {x: 149.05418, y: 237.375, signed: false, fill: "#fff", video: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"}
+        ]
+      },
     }),
     methods: {
       toggle(e) {

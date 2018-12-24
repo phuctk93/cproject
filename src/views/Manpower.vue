@@ -52,40 +52,45 @@
 					<v-card>
 						<v-card-text>
 							<v-layout wrap>
-								<v-flex>
+								<v-flex xs4>
 									<v-img
                     :src="$store.state.user.photo"
                     height="130px"
                     contain
                   ></v-img>
+									<div class="text-xs-center">
+										<p>ROLE</p>
+									</div>
 								</v-flex>
 								<v-flex xs8>
-									<v-card-title primary-title>
-										<div>
+									<div class="px-2">
 									<div class="mb-1">
-										<span>Name: </span>
-										<span class="text-xs-right">{{item.id}}</span>
+										<b>Name: </b>
+										<span>{{item.id}}</span>
 									</div>
 									<div class="mb-1">
-										<span>Rank: </span>
+										<b>Rank: </b>
 										<span>{{item.rank}}</span>
 									</div>
 									<div class="mb-1">
-										<span>Type: </span>
+										<b>Type: </b>
 										<span>{{item.type}}</span>
 									</div>
 									<div class="mb-1">
-										<span>Unit: </span>
+										<b>Unit: </b>
 										<span>{{item.unit}}</span>
 									</div>
 									<div class="mb-1">
-										<span>Skill: </span>
+										<b>Skill: </b>
 										<span>{{item.skill}}</span>
 									</div>
+									<div class="mb-1">
+										<b>Location: </b>
+										<span>{{item.location}}</span>
 									</div>
-									</v-card-title>
+									</div>
 								</v-flex>
-								<v-flex xs12>
+								<v-flex xs12 class="text-xs-center">
 									<p>Check-in time: {{getTime()}}</p>
 								</v-flex>
 							</v-layout>
