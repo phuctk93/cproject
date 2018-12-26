@@ -17,8 +17,8 @@
 		</circle>
 		</g>
 
-		<text class="total" x="50%" y="150" fill="red" text-anchor="middle">{{total}}</text>
-		<text class="title" x="50%" y="180" fill="red" text-anchor="middle">{{title}}</text>
+		<text class="total" x="50%" y="150" text-anchor="middle">{{total}}</text>
+		<text class="title" x="50%" y="180" text-anchor="middle">{{title}}</text>
 
 		</svg>
 	</div>

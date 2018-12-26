@@ -1,7 +1,7 @@
 <template>
 	<div class="chart-svg text-xs-center">
 	<h2>{{title}}</h2>
-	<svg xmlns="http://www.w3.org/2000/svg"
+	<svg class="bar-chart" xmlns="http://www.w3.org/2000/svg"
     preserveAspectRatio="none"
     :viewBox="'0 0 300 ' + height">
 		<text
@@ -107,33 +107,35 @@ export default {
 div.chart-svg {
 	display: block
 }
-svg {
+
+.bar-chart {
 	margin: 2px 5px 5px;
 	width: calc(100% - 10px);
 	height: auto; 
 	font-size: 0.75rem; 
 	overflow: hidden;
 }
-svg text {
+
+.bar-chart text {
   dominant-baseline: middle;
   fill: #000;
 }
-svg text.value {
+.bar-chart text.value {
   fill: white;
 }
-svg line {
+.bar-chart line {
   stroke: #333;
   stroke-width: 1;
 }
-svg rect {
+.bar-chart rect {
   stroke-width: 0;
   fill: #1976d2 !important;
 }
-.title {
+.bar-chart.title {
   color: #000;
   margin: 2px 5px 0;
   text-align: left;
   font-variant: small-caps;
-  font-size: 1rem;
+  font-size: 1em;
 }
 </style>

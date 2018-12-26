@@ -51,7 +51,33 @@
                 :circles="activity.circles">
                 </dragcamera>
               </v-flex>
-              <v-flex xs12 md4></v-flex>
+              <v-flex xs12 md4>
+                <v-card>
+                  <v-card-title>
+                    <v-spacer></v-spacer>
+                    <v-btn class="primary d-block">Filter icon</v-btn>
+                    <div v-for="(gbtn, i) in activity.buttons" :key="'gabtn' + i" class="mb-2 d-block">
+                      <v-btn-toggle>
+                        <v-btn v-for="(btn, j) in gbtn.list" :key="'abtn' + j">{{btn}}</v-btn>
+                      </v-btn-toggle>
+                    </div>
+                  </v-card-title>
+                  <v-card-text id="activity-list">
+                    <div v-for="(item, i) in activity.list" :key="'alist' + i">
+                      <div class="d-flex wrap">
+                        <b>{{ item.title }}</b>
+                        <v-spacer></v-spacer>
+                        <b>{{ item.date }}</b>
+                      </div>
+                      <div>{{ item.description }}</div>
+                      <v-divider
+                        v-if="i + 1 < activity.list.length"
+                        :key="i"
+                      ></v-divider>
+                    </div>
+                  </v-card-text>
+                </v-card>
+              </v-flex>
             </v-layout>
           </v-card-text>
           <v-card-text v-else-if="e.show">
@@ -180,6 +206,19 @@
           {x: 75.726807, y: 143.63692, signed: false, fill: "#fff", video: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"},
           {x: 177.02443, y: 63.505955, signed: false, fill: "#fff", video: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"},
           {x: 149.05418, y: 237.375, signed: false, fill: "#fff", video: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"}
+        ],
+        buttons: [
+          { list: ["All", "HU 1", "HU 2", "HU 3"] },
+          { list: ["All", "Type 1", "Type 2", "Type 3"] },
+          { list: ["All", "Activity A", "Activity B"] }
+        ],
+        list: [
+          { title: "HU/Type/Activity", date: "01/01/2019 12:00", description: "Description"},
+          { title: "HU/Type/Activity", date: "01/01/2019 12:00", description: "Description"},
+          { title: "HU/Type/Activity", date: "01/01/2019 12:00", description: "Description"},
+          { title: "HU/Type/Activity", date: "01/01/2019 12:00", description: "Description"},
+          { title: "HU/Type/Activity", date: "01/01/2019 12:00", description: "Description"},
+          { title: "HU/Type/Activity", date: "01/01/2019 12:00", description: "Description"}
         ]
       },
     }),

@@ -94,8 +94,8 @@
 </script>
 
 <style>
-#manpower {
-  max-height: 70vh;
+#manpower, #activity-list {
+  max-height: 50vh;
   overflow-y: auto
 }
 </style>

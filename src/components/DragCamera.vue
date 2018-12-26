@@ -18,18 +18,24 @@
 					y="19.981247" />
 				</g>
 				<g transform="translate(81.416069,-19.981247)">
-					<circle v-for="(circle, i) in circles" :key="'circleCam' + i" r="12" :cx="circle.x" :cy="circle.y"
-					stroke="#f09" stroke-width="1" :fill="circle.fill" :id="'c' + i"
-					@drop="dropCamera(i)" @mouseover="circleOver(circle)" @mouseleave="circleLeave(circle)" @dragover="allowDrop">
-					</circle>
+				<foreignObject v-for="(circle, i) in circles" :key="'circleCam' + i" :x="circle.x - 13" :y="circle.y - 13" width="26" height="26">
+					<div :draggable="editable" @dragstart="dragCamera(i)">
+						<svg width="26" height="26">
+								<circle r="12" cx="13" cy="13"
+								stroke="#f09" stroke-width="1" :fill="circle.fill" :id="'c' + i"
+								@mouseover="circleOver(circle)" @mouseleave="circleLeave(circle)">
+								</circle>
+						</svg>
+					</div>
+				</foreignObject>
 				</g>
 			</svg>
 		</v-flex>
 		<v-flex xs12 md4>
 			<div v-for="(cam, i) in cameras" :key="'camera' + i" style="position: relative">
-				<video v-if="cam.link" @dragstart="dragCamera(i)" :src="cam.link" type="video/mp4" controls style="width: 100%" :draggable="editable"></video>
-				<div v-else-if="editable && !cam.link" @dragstart="dragCamera(i)" draggable="true" style="width: 100%; font-size: 3em; text-align: center; border: #777 dotted">
-					Drag here
+				<video v-if="cam.link" @drop="dropCamera(i)" @dragover="allowDrop" :src="cam.link" type="video/mp4" controls style="width: 100%"></video>
+				<div v-else-if="editable && !cam.link" @drop="dropCamera(i)" @dragover="allowDrop" style="width: 100%; font-size: 3em; text-align: center; border: #777 dotted">
+					Drop here
 				</div>
 				<v-btn v-if="editable" @click="addCamera()" class="primary">Add another camera</v-btn>
 				<v-btn
@@ -45,7 +51,7 @@
 					style="right: -20px"
 					:disabled="cameras.length <= 1"
         >
-          <v-icon>remove</v-icon>
+          <v-icon>close</v-icon>
         </v-btn>
 			</div>
 		</v-flex>
@@ -82,7 +88,7 @@ export default {
 		},
 		dropCamera (i) {
 			var id = this.currentID
-			var cam = this.cameras[id]
+			var cam = this.cameras[i]
 			//Get and set properties in old circle
 			if (cam.cid != null) {
 				var oldC = this.circles[cam.cid]
@@ -90,12 +96,12 @@ export default {
 				oldC.signed = false
 			}
 			//Get and set properties in new circle
-			var c = this.circles[i]
+			var c = this.circles[id]
 			c.fill = "#f00"
 			c.signed = true
 			//Set props to camera with new circle
 			cam.link = c.video
-			cam.cid = i
+			cam.cid = id
 		},
 		circleOver (c) {
 			if (!c.signed) {
