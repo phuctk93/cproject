@@ -1,8 +1,15 @@
 <template>
 	<v-layout wrap>
+		<!-- Activity area -->
 		<v-flex xs12 md4></v-flex>
+
+		<!-- Map area -->
 		<v-flex xs12 md4></v-flex>
+
+		<!-- Muster area -->
 		<v-flex xs12 md4></v-flex>
+
+		<!-- Event area -->
 		<v-flex xs12 md8>
 			<v-card>
 				<v-card-title>
@@ -11,9 +18,9 @@
 					<v-menu
 					ref="menu"
 					:close-on-content-click="false"
-					v-model="menu"
+					v-model="event.menu"
 					:nudge-right="40"
-					:return-value.sync="date"
+					:return-value.sync="event.date"
 					lazy
 					transition="scale-transition"
 					offset-y
@@ -26,10 +33,10 @@
 							prepend-icon="event"
 							readonly
 						></v-text-field>
-						<v-date-picker v-model="date" no-title scrollable>
+						<v-date-picker v-model="event.date" no-title scrollable>
 							<v-spacer></v-spacer>
-							<v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
-							<v-btn flat color="primary" @click="saveDate(date)">OK</v-btn>
+							<v-btn flat color="primary" @click="event.menu = false">Cancel</v-btn>
+							<v-btn flat color="primary" @click="saveDate(event.date)">OK</v-btn>
 						</v-date-picker>
 					</v-menu>
 					<v-spacer></v-spacer>
@@ -38,17 +45,17 @@
 				<v-card-text>
 					<v-layout wrap>
 						<v-flex xs12 md6>
-							<evt v-on:edit="edit" v-on:drag="drag" :locations="locations" :list="events"></evt>
+							<evt v-on:edit="edit" v-on:drag="drag" :locations="event.locations" :list="event.list"></evt>
 						</v-flex>
 						<v-flex xs12 md6 class="text-xs-center">
 							<h2>Up next</h2>
 							<v-data-table
-								:headers="headers"
-								:items="events"
+								:headers="event.headers"
+								:items="event.list"
 								class="elevation-1"
 								>
 								<template slot="items" slot-scope="props">
-									<tr @click="dialog = !dialog">
+									<tr @click="event.dialog = !event.dialog">
 										<td>{{ props.item.startTime }}</td>
 										<td>{{ props.item.location }}</td>
 										<td>{{ props.item.name }}</td>
@@ -60,17 +67,21 @@
 				</v-card-text>
 			</v-card>
 		</v-flex>
-		<v-flex xs12 md4></v-flex>
-		<v-dialog v-model="dialog">
+
+		<!-- Filter area -->
+		<v-flex xs12 md4>
+			<hfilter :list="filter.list"></hfilter>
+		</v-flex>
+		<v-dialog v-model="event.dialog">
 			<v-card>
 				<v-card-title>
 					<v-spacer></v-spacer>
-					<v-btn @click="dialog = false" icon>
+					<v-btn @click="event.dialog = false" icon>
 						<v-icon>close</v-icon>
 					</v-btn>
 				</v-card-title>
 				<v-card-text>
-					<evt v-on:drag="drag" :locations="locations" :list="events"></evt>
+					<evt v-on:drag="drag" :locations="event.locations" :list="event.list"></evt>
 				</v-card-text>
 			</v-card>
 		</v-dialog>
@@ -79,55 +90,68 @@
 
 <script>
 import evt from '../components/Event.vue'
+import hfilter from '../components/HousingFilter.vue'
 export default {
 	props: {
 		id: String
 	},
 	components: {
-		evt
+		evt,
+		hfilter
 	},
 	data: () => ({
-		dialog: false,
-		date: new Date().toISOString().substr(0, 10),
-    menu: false,
-		headers: [
-			{ text: 'Time', value: 'startTime' },
-			{ text: 'Location', value: 'location' },
-			{ text: 'Acivity', value: 'name' },
-		],
-		events: [
-			{ startTime: 10, endTime: 23, name: "Event name", location: "a", value: false },
-			{ startTime: 9, endTime: 11, name: "Event name", location: "b", value: false },
-			{ startTime: 0, endTime: 10, name: "Event name", location: "c", value: false },
-			{ startTime: 9, endTime: 13, name: "Event name", location: "d", value: false }
-		],
-		locations: {
-			"a": { title: "Location A", color: "#f99" },
-			"b": { title: "Location B", color: "#9f9" },
-			"c": { title: "Location C", color: "#99f" },
-			"d": { title: "Location C", color: "#ff0" },
-		}
+		filter: {
+			dialog: false,
+			list: [
+				{ type: "Type A", id: "Name A", unit: "Unit A",  location: "Location A" },
+				{ type: "Type B", id: "Name B", unit: "Unit B",  location: "Location B" },
+				{ type: "Type C", id: "Name C", unit: "Unit C",  location: "Location C" },
+				{ type: "Type D", id: "Name D", unit: "Unit D",  location: "Location D" }
+			]
+		},
+		event: {
+			dialog: false,
+			date: new Date().toISOString().substr(0, 10),
+			menu: false,
+			list: [
+				{ startTime: 10, endTime: 23, name: "Event name", location: "a", value: false },
+				{ startTime: 9, endTime: 11, name: "Event name", location: "b", value: false },
+				{ startTime: 0, endTime: 10, name: "Event name", location: "c", value: false },
+				{ startTime: 9, endTime: 13, name: "Event name", location: "d", value: false }
+			],
+			locations: {
+				"a": { title: "Location A", color: "#f99" },
+				"b": { title: "Location B", color: "#9f9" },
+				"c": { title: "Location C", color: "#99f" },
+				"d": { title: "Location D", color: "#ff0" },
+			},
+			headers: [
+				{ text: 'Time', value: 'startTime' },
+				{ text: 'Location', value: 'location' },
+				{ text: 'Acivity', value: 'name' },
+			],
+		},
 	}),
 	computed: {
 		dateFormated() {
-			var date = new Date(this.date)
+			var date = new Date(this.event.date)
 			return date.toJSON().slice(0,10).split('-').reverse().join('/') + ", " + date.toString().slice(0, 3)
 		}
 	},
 	methods: {
 		saveDate(date) {
 			this.$refs.menu.save(date)
-			this.events.reverse()
+			this.event.list.reverse()
 		},
 		drag(data) {
-			var evt = this.events[data.i]
+			var evt = this.event.list[data.i]
 			var offset = evt.endTime - evt.startTime
 			evt.startTime = data.y/30
 			evt.endTime = offset + evt.startTime
 		},
 		edit(i) {
 			console.log(i)
-			this.dialog = true
+			this.event.dialog = true
 		}
 	}
 }
