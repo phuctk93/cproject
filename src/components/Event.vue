@@ -14,8 +14,8 @@
 			<line x1="20" y1="10" x2="20" :y2="750"></line>
 			<text v-for="i in 24" :key="'l'+i" x="0" :y="i * 30">{{i - 1}}</text>
 			<rect class="draggable" v-for="(e, i) in list" :key="'erect' + i"
-			width="50" :height="30 * (e.endTime - e.startTime)"
-			:x="40 + 70 * i" :y="20 + e.startTime * 30" :fill="locations[e.location].color"
+			width="100" :height="30 * (e.endTime - e.startTime)"
+			:x="40 + 120 * i" :y="20 + e.startTime * 30" :fill="locations[e.location].color"
 			@mousedown="startDrag($event, i)" @mousemove="drag" @mouseup="endDrag" @mouseleave="endDrag">
 			</rect>
 			</svg>

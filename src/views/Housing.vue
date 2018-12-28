@@ -81,7 +81,21 @@
 					</v-btn>
 				</v-card-title>
 				<v-card-text>
-					<evt v-on:drag="drag" :locations="event.locations" :list="event.list"></evt>
+					<v-layout wrap>
+						<v-flex xs12 md8 class="autoscroll">
+							<evt v-on:drag="drag" :locations="event.locations" :list="event.list"></evt>
+						</v-flex>
+						<v-flex xs12 md4>
+							<v-card>
+								<v-card-title>
+									<h2>Event</h2>
+								</v-card-title>
+								<v-card-text>
+									<hform></hform>
+								</v-card-text>
+							</v-card>
+						</v-flex>
+					</v-layout>
 				</v-card-text>
 			</v-card>
 		</v-dialog>
@@ -91,13 +105,15 @@
 <script>
 import evt from '../components/Event.vue'
 import hfilter from '../components/HousingFilter.vue'
+import hform from '../components/HousingForm.vue'
 export default {
 	props: {
 		id: String
 	},
 	components: {
 		evt,
-		hfilter
+		hfilter,
+		hform
 	},
 	data: () => ({
 		filter: {

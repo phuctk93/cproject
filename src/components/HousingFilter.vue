@@ -3,13 +3,7 @@
 		<v-card-text>
 			<v-layout wrap>
 				<v-flex xs12>
-					<v-layout wrap>
-						<v-flex>
-							<v-btn v-for="(btn, i) in buttons" :key="'hfbtn' + i" class="primary">
-								{{btn}}
-							</v-btn>
-						</v-flex>
-					</v-layout>
+					<toggle :list="buttons" all="true" type="housing" v-on:toggle="toggleFilter"></toggle>
 				</v-flex>
 				<v-flex xs12></v-flex>
 			</v-layout>
@@ -32,10 +26,14 @@
 </template>
 
 <script>
+import toggle from "../components/Toggle.vue"
 export default {
 	name: "h-filter",
 	props: {
 		list: Array
+	},
+	components: {
+		toggle
 	},
 	data: () => ({
 		dialog: false,
@@ -45,7 +43,29 @@ export default {
 			{ text: 'Unit', value: 'unit' },
 			{ text: 'Location', value: 'location' }
 		],
-		buttons: [ "All", "Class A", "Class B", "Class C", "Class D" ]
-	})
+		buttons: [
+			{ name: "Class A", value: "a", active: false},
+			{ name: "Class B", value: "b", active: false},
+			{ name: "Class C", value: "c", active: false},
+			{ name: "Class D", value: "d", active: false}
+		]
+	}),
+	methods: {
+		toggleFilter(data) {
+			var type = data.type
+			var value = data.value
+			if (value != "all") {
+				var btn = this.buttons[value]
+				btn.active = !btn.active
+				console.log(type)
+			}
+			else {
+				this.buttons.forEach(btn => {
+					btn.active = false
+				});
+				console.log("all")
+			}
+		}
+	}
 }
 </script>
