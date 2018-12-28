@@ -22,18 +22,7 @@
              </barchart>
           </v-card-text>
           <v-card-text v-else-if="e.name == 'Muster' && e.show">
-            <v-layout wrap>
-              <v-flex v-for="(chart, i) in muster.charts" :key="'meter' + i" :class="'xs' + chart.size">
-                <meterchart 
-                  :title="chart.title"
-                  :max="chart.max"
-                  :present="chart.present"
-                  :away="chart.away"
-                  :color="chart.color"
-                  @click="changeMeter(i)"
-                ></meterchart>
-              </v-flex>
-            </v-layout>
+            <omuster :charts="muster.charts" v-on:changeMeter="changeMeter"></omuster>
           </v-card-text>
           <v-card-text v-else-if="e.name == 'Map and activity' && e.show">
             <v-layout wrap>
@@ -116,7 +105,7 @@
 <script>
   import draggable from 'vuedraggable'
   import barchart from '../components/Barchart.vue'
-  import meterchart from '../components/Meterchart.vue'
+  import omuster from '../components/OverViewMuster.vue'
   import dragcamera from '../components/DragCamera.vue'
   import victim from '../components/OverViewVictim.vue'
   import support from '../components/OverViewSupport.vue'
@@ -124,7 +113,7 @@
     components: {
       draggable,
       barchart,
-      meterchart,
+      omuster,
       dragcamera,
       victim,
       support
@@ -238,14 +227,19 @@
       },
       changeMeter(index) {
         var m = this.muster
+        //Muster card
         this.numbers[1].size = 12
-        if (index == m.currentSelect) {
-          return
+        var first = m.charts[index]
+        m.charts.splice(index, 1)
+        m.charts.unshift(first)
+        for (let i = 0; i < m.charts.length; i++) {
+          const chart = m.charts[i];
+          if ( i == 0) {
+            chart.size = 12
+          } else {
+            chart.size = 4
+          }
         }
-        m.oldSelect = m.currentSelect
-        m.currentSelect = index
-        m.charts[m.oldSelect].size = 3
-        m.charts[m.currentSelect].size = 12
       }
     }
   }

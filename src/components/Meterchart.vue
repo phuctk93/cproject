@@ -9,11 +9,11 @@
 		</circle>
 
 		<circle r="80" cx="50%" cy="50" stroke="#ccc" stroke-width="12" stroke-dasharray="502.4" :stroke-dashoffset="v_present" fill="none">
-			<animate attributeName="stroke-dashoffset" from="502.4" :to="v_present" dur="1s" fill="freeze" />
+			<animate attributeName="stroke-dashoffset" from="502.4" :to="v_present" dur="1s" />
 		</circle>
 
 		<circle r="80" cx="50%" cy="50" stroke="#1976d2" stroke-width="10" stroke-dasharray="502.4" :stroke-dashoffset="v_away" fill="none">
-			<animate attributeName="stroke-dashoffset" from="502.4" :to="v_away" dur="2s" fill="freeze" />
+			<animate attributeName="stroke-dashoffset" from="502.4" :to="v_away" dur="2s" />
 		</circle>
 		</g>
 
@@ -35,14 +35,17 @@ export default {
 		color: String
 	},
 	data: () => ({
-		v_present: 0,
-		v_away: 0,
-		total: 0
 	}),
-	mounted() {
-		this.v_present = 251.2 * (1 - (this.present / this.max)) + 251.2
-		this.v_away = 251.2 * (1 - (this.away / this.max)) + 251.2
-		this.total = this.present
+	computed: {
+		v_present() {
+			return 251.2 * (1 - (this.present / this.max)) + 251.2
+		},
+		v_away() {
+			return 251.2 * (1 - (this.away / this.max)) + 251.2
+		},
+		total() {
+			return this.present
+		} 
 	}
 }
 </script>
@@ -51,6 +54,8 @@ export default {
 <style>
 .meter {
 	font-size: 1rem;
+	cursor: pointer;
+	
 }
 
 .meter circle{
