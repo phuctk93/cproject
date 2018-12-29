@@ -17,11 +17,10 @@
 		<v-flex xs12 md8>
 			<v-layout wrap>
 				<v-flex xs12>
-					<div v-for="(gbtn, i) in buttons" :key="'gbtn' + i" class="mb-2">
-					<v-btn-toggle>
-						<v-btn v-for="(btn, j) in gbtn.list" :key="'btn' + j">{{btn}}</v-btn>
-					</v-btn-toggle>
-					</div>
+					<toggle all type="manpower-status"></toggle>
+					<toggle all type="manpower-skill"></toggle>
+					<toggle all type="manpower-unit"></toggle>
+					<toggle all type="manpower-housing"></toggle>
 				</v-flex>
 				<v-flex xs12>
 					<v-data-table
@@ -104,10 +103,12 @@
 
 <script>
 import barchart from '../components/Barchart.vue'
+import toggle from '../components/Toggle.vue'
 export default {
 	name: "manpower",
 	components: {
-    barchart
+		barchart,
+		toggle
   },
 	data: () => ({
 		dialog: false,
@@ -143,12 +144,6 @@ export default {
 			{ text: 'Skill', value: 'skill' },
       { text: 'Location', value: 'location' },
 		],
-		buttons: [
-			{ list: ["All", "Status A", "Status B", "Status C", "Status D"] },
-			{ list: ["All", "Skill A", "Skill B", "Skill C", "Skill D"] },
-			{ list: ["All", "Unit A", "Unit B", "Unit C", "Unit D"] },
-			{ list: ["All", "Housing A", "Housing B", "Housing C", "Housing D"] },
-		]
 	}),
 	watch: {
     pagination: {

@@ -1,22 +1,13 @@
 <template>
 	<v-layout wrap>
-		<v-flex xs12 md4>
-			<v-layout wrap>
-				<v-flex>
-					<v-btn v-for="(btn, i) in dateBtn" :key="'oidbtn' + i" class="primary">
-						{{dateBtn}}
-					</v-btn>
-				</v-flex>
-			</v-layout>
+		<v-flex xs12 md2>
+			<toggle type="o-incident-d"></toggle>
 		</v-flex>
-		<v-flex xs12 md8>
+		<v-flex xs12 md10>
 			<v-layout wrap>
 				<v-flex xs12>
-					<div v-for="(gbtn, i) in buttons" :key="'goibtn' + i" class="mb-2">
-					<v-btn-toggle>
-						<v-btn v-for="(btn, j) in gbtn.list" :key="'oibtn' + j">{{btn}}</v-btn>
-					</v-btn-toggle>
-					</div>
+					<toggle all multilple type="o-incident-t"></toggle>
+					<toggle all multilple type="o-incident-h"></toggle>
 				</v-flex>
 				<v-flex xs12>
 					<v-data-table
@@ -45,8 +36,12 @@
 </template>
 
 <script>
+import toggle from "../Toggle.vue"
 export default {
 	name: "o-incident",
+	components: {
+		toggle
+	},
 	data: () => ({
 		total: 10,
     tableItems: [],

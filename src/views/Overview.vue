@@ -11,27 +11,16 @@
               <v-icon>{{ e.show ? 'remove' : 'add' }}</v-icon>
             </v-btn>
             </v-card-title>
-          <v-card-text v-if="e.name == 'Manpower' && e.show" id="manpower">
-            <barchart
-              v-for="(chart, i) in manpower.charts"
-              :key="'chart' + i"
-              :title="chart.title"
-              :labels="chart.labels" 
-              :range="chart.range" 
-              :values="chart.values">
-             </barchart>
+          <v-card-text v-if="e.name == 'Manpower' && e.show">
+            <manpower></manpower>
           </v-card-text>
           <v-card-text v-else-if="e.name == 'Muster' && e.show">
-            <omuster :charts="muster.charts" v-on:changeMeter="changeMeter"></omuster>
+            <omuster v-on:changeMeter="changeMeter"></omuster>
           </v-card-text>
           <v-card-text v-else-if="e.name == 'Map and activity' && e.show">
             <v-layout wrap>
               <v-flex xs12 md2>
-                <v-layout wrap>
-                  <v-flex v-for="(btn, i) in 9" :key="'a-btn' + i">
-                    <v-btn class="primary" v-text="'Level' + i"></v-btn>
-                  </v-flex>
-                </v-layout>
+                <toggle type="o-map-l"></toggle>
               </v-flex>
               <v-flex xs12 md6>
                 <dragcamera
@@ -45,11 +34,9 @@
                   <v-card-title>
                     <v-spacer></v-spacer>
                     <v-btn class="primary d-block">Filter icon</v-btn>
-                    <div v-for="(gbtn, i) in activity.buttons" :key="'gabtn' + i" class="mb-2 d-block">
-                      <v-btn-toggle>
-                        <v-btn v-for="(btn, j) in gbtn.list" :key="'abtn' + j">{{btn}}</v-btn>
-                      </v-btn-toggle>
-                    </div>
+                    <toggle all multilple type="o-map-h"></toggle>
+                    <toggle all multilple type="o-map-t"></toggle>
+                    <toggle all multilple type="o-map-a"></toggle>
                   </v-card-title>
                   <v-card-text id="activity-list">
                     <div v-for="(item, i) in activity.list" :key="'alist' + i">
@@ -75,8 +62,8 @@
           <v-card-text v-else-if="e.name == 'Support Requisition' && e.show">
             <support></support>
           </v-card-text>
-          <v-card-text v-else-if="e.show">
-            {{e.content}}
+          <v-card-text v-else-if="e.name == 'Incident' && e.show">
+            <incident></incident>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -104,89 +91,36 @@
 
 <script>
   import draggable from 'vuedraggable'
-  import barchart from '../components/Barchart.vue'
-  import omuster from '../components/OverViewMuster.vue'
+  import omuster from '../components/overview/Muster.vue'
   import dragcamera from '../components/DragCamera.vue'
-  import victim from '../components/OverViewVictim.vue'
-  import support from '../components/OverViewSupport.vue'
+  import toggle from '../components/Toggle.vue'
+  import manpower from '../components/overview/Manpower.vue'
+  import incident from '../components/overview/Incident.vue'
+  import victim from '../components/overview/Victim.vue'
+  import support from '../components/overview/Support.vue'
   export default {
     components: {
       draggable,
-      barchart,
+      manpower,
       omuster,
       dragcamera,
       victim,
-      support
+      support,
+      incident,
+      toggle
     },
     data: () => ({
       numbers: [
-        {id: 1, name: "Manpower", show: false, size: 6, min_size: 6, max_size: 6},
+        {id: 1, name: "Manpower", show: false, size: 6, min_size: 6, max_size: 12},
         {id: 2, name: "Muster", show: false, size: 6, min_size: 6, max_size: 6},
         {id: 3, name: "Map and activity", show: false, size: 6, min_size: 6, max_size: 12},
-        {id: 4, name: "Incident", content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        show: false, size: 6, min_size: 6, max_size: 6},
+        {id: 4, name: "Incident", show: false, size: 6, min_size: 6, max_size: 12},
         {id: 5, name: "Victims", show: false, size: 6, min_size: 6, max_size: 12},
         {id: 6, name: "Support Requisition", show: false, size: 6, min_size: 6, max_size: 12},
       ],
-      manpower: {
-        charts: [
-          {
-            title: "Chart 1",
-            values: [10, 20, 30, 50, 10],
-            range: [0, 100],
-            labels: ["position 1", "position 2", "position 3", "position 4", "position 5"]
-          },
-          {
-            title: "Chart 2",
-            values: [20, 10, 30],
-            range: [0, 100],
-            labels: ["position 1", "position 2", "position 3"]
-          },
-          {
-            title: "Chart 3",
-            values: [20, 10, 30],
-            range: [0, 100],
-            labels: ["position 1", "position 2", "position 3"]
-          }
-        ]
-      },
       muster: {
         currentSelect: 0,
         oldSelect: 0,
-        charts: [
-          {
-            title: "HU 1",
-            max: 100,
-            present: 80,
-            away: 50,
-            color: "#99f",
-            size: 3
-          },
-          {
-            title: "HU 2",
-            max: 100,
-            present: 50,
-            away: 45,
-            color: "#9f9",
-            size: 3
-          },
-          {
-            title: "HU 3",
-            max: 100,
-            present: 90,
-            away: 50,
-            color: "#f99",
-            size: 3
-          },
-          {
-            title: "HU 4",
-            max: 100,
-            present: 100,
-            away: 50,
-            color: "#9ff",
-            size: 3
-          },
-        ]
       },
       activity: {
         dialog: false,
@@ -200,11 +134,6 @@
           {x: 75.726807, y: 143.63692, signed: false, fill: "#fff", video: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"},
           {x: 177.02443, y: 63.505955, signed: false, fill: "#fff", video: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"},
           {x: 149.05418, y: 237.375, signed: false, fill: "#fff", video: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"}
-        ],
-        buttons: [
-          { list: ["All", "HU 1", "HU 2", "HU 3"] },
-          { list: ["All", "Type 1", "Type 2", "Type 3"] },
-          { list: ["All", "Activity A", "Activity B"] }
         ],
         list: [
           { title: "HU/Type/Activity", date: "01/01/2019 12:00", description: "Description"},
@@ -225,21 +154,9 @@
           e.size = e.min_size
         }
       },
-      changeMeter(index) {
-        var m = this.muster
+      changeMeter() {
         //Muster card
         this.numbers[1].size = 12
-        var first = m.charts[index]
-        m.charts.splice(index, 1)
-        m.charts.unshift(first)
-        for (let i = 0; i < m.charts.length; i++) {
-          const chart = m.charts[i];
-          if ( i == 0) {
-            chart.size = 12
-          } else {
-            chart.size = 4
-          }
-        }
       }
     }
   }

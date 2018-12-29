@@ -1,7 +1,7 @@
 <template>
-	<v-layout wrap>
+	<v-layout row wrap>
 		<v-flex>
-			<v-btn v-if="all" :outline="!allBtn.active" color="blue" @click="toggleAll()" :dark="allBtn.active" small>{{allBtn.name}}</v-btn>
+			<v-btn v-if="all" color="blue" @click="toggleAll()" dark small>{{allBtn.name}}</v-btn>
 			<v-btn v-for="(btn, i) in list" :key="btn.name" @click="toggle(i)" color="blue" :outline="!btn.active" :dark="btn.active" small>
 				{{btn.name}}
 			</v-btn>
@@ -14,9 +14,9 @@
 export default {
 	name: "btn-toggle",
 	props: {
-		list: Array,
 		type: String,
 		all: Boolean,
+		multilple: Boolean
 	},
 	data: () => ({
 		allBtn: {
@@ -25,16 +25,26 @@ export default {
 			active: true
 		},
 	}),
+	computed: {
+		list() {
+			return this.$store.state.toggles[this.type]
+		}
+	},
 	methods: {
 		toggle(i) {
 			if (this.allBtn.active) {
 				this.allBtn.active = false
 			}
-			this.$emit("toggle", { type: this.type, value: i})
+			var result = { type: this.type, index: i}
+			if (this.multilple) {
+				this.$store.commit("activeToggle", result)
+			} else {
+				this.$store.commit("activeSingleToggle", result)
+			}
 		},
 		toggleAll() {
 			this.allBtn.active = true
-			this.$emit("toggle", { type: this.type, value: "all"})
+			this.$store.commit("allToggle", this.type)
 		}
 	}
 }

@@ -3,7 +3,8 @@
 		<v-card-text>
 			<v-layout wrap>
 				<v-flex xs12>
-					<toggle :list="buttons" all="true" type="housing" v-on:toggle="toggleFilter"></toggle>
+					<toggle all multilple type="housing">
+					</toggle>
 				</v-flex>
 				<v-flex xs12></v-flex>
 			</v-layout>
@@ -26,7 +27,7 @@
 </template>
 
 <script>
-import toggle from "../components/Toggle.vue"
+import toggle from "../Toggle.vue"
 export default {
 	name: "h-filter",
 	props: {
@@ -42,12 +43,6 @@ export default {
 			{ text: 'ID/NAME', value: 'id' },
 			{ text: 'Unit', value: 'unit' },
 			{ text: 'Location', value: 'location' }
-		],
-		buttons: [
-			{ name: "Class A", value: "a", active: false},
-			{ name: "Class B", value: "b", active: false},
-			{ name: "Class C", value: "c", active: false},
-			{ name: "Class D", value: "d", active: false}
 		]
 	}),
 	methods: {

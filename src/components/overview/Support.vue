@@ -3,11 +3,9 @@
 		<v-flex xs12>
 			<v-layout wrap>
 				<v-flex xs12>
-					<div v-for="(gbtn, i) in buttons" :key="'gosbtn' + i" class="mb-2">
-					<v-btn-toggle>
-						<v-btn v-for="(btn, j) in gbtn.list" :key="'osbtn' + j">{{btn}}</v-btn>
-					</v-btn-toggle>
-					</div>
+					<toggle all multilple type="o-support-sp"></toggle>
+					<toggle all multilple type="o-support-st"></toggle>
+					<toggle all multilple type="o-support-h"></toggle>
 				</v-flex>
 				<v-flex xs12>
 					<v-data-table
@@ -36,8 +34,12 @@
 </template>
 
 <script>
+import toggle from '../Toggle.vue'
 export default {
 	name: "o-support",
+	components: {
+		toggle
+	},
 	data: () => ({
 		total: 10,
     tableItems: [],

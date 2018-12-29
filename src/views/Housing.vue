@@ -104,8 +104,8 @@
 
 <script>
 import evt from '../components/Event.vue'
-import hfilter from '../components/HousingFilter.vue'
-import hform from '../components/HousingForm.vue'
+import hfilter from '../components/housing/Filter.vue'
+import hform from '../components/housing/Form.vue'
 export default {
 	props: {
 		id: String
@@ -162,8 +162,12 @@ export default {
 		drag(data) {
 			var evt = this.event.list[data.i]
 			var offset = evt.endTime - evt.startTime
-			evt.startTime = data.y/30
-			evt.endTime = offset + evt.startTime
+			var svgPos = data.y / 30
+			if (svgPos >= 0 && (svgPos + offset) < 24) {
+				evt.startTime = data.y/30
+				evt.endTime = offset + evt.startTime
+			}
+
 		},
 		edit(i) {
 			console.log(i)

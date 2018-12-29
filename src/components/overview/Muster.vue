@@ -33,7 +33,7 @@
     </v-flex>
     <v-flex v-if="full" xs12 md4>
 			<h2>{{title}}</h2>
-			<v-btn v-for="(btn, i) in hbuttons" :key="'omhbtn' + i" class="primary" small>{{btn}}</v-btn>
+			<Toggle all multilple type="o-muster-h"></Toggle>
 			<h2>Headcount Distribution ({{title}})</h2>
 			<Barchart
 			:title="barchart.title"
@@ -42,7 +42,7 @@
       :values="barchart.values">></Barchart>
     </v-flex>
     <v-flex v-if="full" xs12 md4>
-			<v-btn v-for="(btn, i) in tbuttons" :key="'omtbtn' + i" class="primary" small>{{btn}}</v-btn>
+			<Toggle all multilple type="o-muster-t"></Toggle>
 			<v-data-table
 			:headers="type.headers"
 			:items="type.list"
@@ -62,18 +62,51 @@
 </template>
 
 <script>
-import Meterchart from '../components/Meterchart.vue'
-import Barchart from '../components/Barchart.vue'
+import Meterchart from '../Meterchart.vue'
+import Barchart from '../Barchart.vue'
+import Toggle from '../Toggle.vue'
 export default {
 	name: "o-muster",
-	props: {
-		charts: Array
-	},
 	components: {
 		Meterchart,
-		Barchart
+		Barchart,
+		Toggle
 	},
 	data: () => ({
+		charts: [
+			{
+				title: "HU 1",
+				max: 100,
+				present: 80,
+				away: 50,
+				color: "#99f",
+				size: 3
+			},
+			{
+				title: "HU 2",
+				max: 100,
+				present: 50,
+				away: 45,
+				color: "#9f9",
+				size: 3
+			},
+			{
+				title: "HU 3",
+				max: 100,
+				present: 90,
+				away: 50,
+				color: "#f99",
+				size: 3
+			},
+			{
+				title: "HU 4",
+				max: 100,
+				present: 100,
+				away: 50,
+				color: "#9ff",
+				size: 3
+			},
+		],
 		headers: [
 			{ text: "Present", value: "present" },
 			{ text: "Away", value: "away" },
@@ -93,8 +126,6 @@ export default {
 				{ type: "Type D", id: "Name D", location: "Location D", unit: "Unit D"},
 			]
 		},
-		hbuttons: ["ALL", "Housing A", "Housing B", "Housing C", "Housing D"],
-		tbuttons: ["ALL", "Type A", "Type B", "Type C", "Type D"],
 		barchart: {
       title: "",
       values: [10, 20, 30, 50, 10],
@@ -123,8 +154,19 @@ export default {
 		}
 	},
 	methods: {
-		changeMeter(i) {
-			this.$emit("changeMeter", i)
+		changeMeter(index) {
+			var first = this.charts[index]
+      this.charts.splice(index, 1)
+      this.charts.unshift(first)
+      for (let i = 0; i < this.charts.length; i++) {
+        const chart = this.charts[i];
+        if ( i == 0) {
+          chart.size = 12
+        } else {
+          chart.size = 4
+        }
+      }
+			this.$emit("changeMeter")
 			this.full = true
 		}
 	}

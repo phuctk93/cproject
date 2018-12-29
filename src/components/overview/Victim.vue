@@ -17,11 +17,9 @@
 		<v-flex xs12 md8>
 			<v-layout wrap>
 				<v-flex xs12>
-					<div v-for="(gbtn, i) in buttons" :key="'govbtn' + i" class="mb-2">
-					<v-btn-toggle>
-						<v-btn v-for="(btn, j) in gbtn.list" :key="'ovbtn' + j">{{btn}}</v-btn>
-					</v-btn-toggle>
-					</div>
+					<toggle	all multilple type="o-victim-c"></toggle>
+					<toggle	all multilple type="o-victim-l"></toggle>
+					<toggle	all multilple type="o-victim-t"></toggle>
 				</v-flex>
 				<v-flex xs12>
 					<v-data-table
@@ -49,11 +47,13 @@
 </template>
 
 <script>
-import barchart from '../components/Barchart.vue'
+import barchart from '../Barchart.vue'
+import toggle from '../Toggle.vue'
 export default {
 	name: "o-victim",
 	components: {
-		barchart
+		barchart,
+		toggle
 	},
 	data: () => ({
 		charts: [
@@ -80,11 +80,6 @@ export default {
       { text: 'Location', value: 'location' },
 			{ text: 'Class', value: 'class' },
 			{ text: 'Hospital Name', value: 'hname' },
-		],
-		buttons: [
-			{ list: ["All", "Class A", "Class B", "Class C", "Class D"] },
-			{ list: ["All", "Location A", "Location B", "Location C"] },
-			{ list: ["All", "Type A", "Type B", "Type C", "Type D"] },
 		]
 	}),
 	watch: {

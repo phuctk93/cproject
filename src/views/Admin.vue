@@ -40,7 +40,13 @@
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>{{ title }}</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn>USER PROFILE</v-btn>
+      <v-btn v-for="icon in icons" :key="'icon' + icon.name"
+      @click="icon.active = !icon.active"
+      :outline="!icon.active" class="red"
+      >
+        {{icon.name}}
+      </v-btn>
+      <v-spacer></v-spacer>
     </v-toolbar>
     <v-content>
       <v-container grid-list-md>
@@ -67,7 +73,12 @@
         {name: "Manpower", path: "manpower"},
         {name: "Victim", path: "victim"},
 				{name: "Alert", path: "alert"}
-			]
+      ],
+      icons: [
+        { name: "A", active: false },
+        { name: "B", active: false },
+        { name: "C", active: false },
+      ]
     }),
     props: {
       source: String
@@ -94,8 +105,8 @@
 </script>
 
 <style>
-#manpower, #activity-list, .autoscroll {
-  max-height: 50vh;
+#activity-list, .autoscroll {
+  max-height: 80vh;
   overflow-y: auto
 }
 </style>
