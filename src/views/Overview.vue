@@ -1,13 +1,13 @@
 <template>
   <div>
-  <draggable v-model="numbers" @start="drag=true" @end="drag=false">
+  <draggable v-model="cards" @start="drag=true" @end="drag=false">
     <transition-group class="layout row wrap" name="list-complete">
-      <v-flex v-for="e in numbers" :key="e.id" :class="'list-complete-item xs12 md' + e.size">
+      <v-flex v-for="(e, i) in cards" :key="e.id" :class="'list-complete-item xs12 md' + e.size">
         <v-card>
             <v-card-title>
               <span>{{e.name}}</span>
               <v-spacer></v-spacer>
-            <v-btn icon @click="toggle(e)">
+            <v-btn icon @click="toggle(i)">
               <v-icon>{{ e.show ? 'remove' : 'add' }}</v-icon>
             </v-btn>
             </v-card-title>
@@ -39,7 +39,7 @@
                     <toggle all multilple type="o-map-a"></toggle>
                   </v-card-title>
                   <v-card-text id="activity-list">
-                    <div v-for="(item, i) in activity.list" :key="'alist' + i">
+                    <div v-for="(item, i) in activity.list" :key="'alist' + i" class="row">
                       <div class="d-flex wrap">
                         <b>{{ item.title }}</b>
                         <v-spacer></v-spacer>
@@ -109,6 +109,16 @@
       incident,
       toggle
     },
+    computed: {
+      cards: {
+        get() {
+           return this.$store.state.overview.cards
+        },
+        set(value) {
+          this.$store.commit('moveCards', value)
+        }
+      }
+    },
     data: () => ({
       numbers: [
         {id: 1, name: "Manpower", show: false, size: 6, min_size: 6, max_size: 12},
@@ -146,17 +156,12 @@
       },
     }),
     methods: {
-      toggle(e) {
-        e.show = !e.show
-        if (e.show){
-          e.size = e.max_size
-        } else {
-          e.size = e.min_size
-        }
+      toggle(i) {
+        this.$store.commit("toggleCard", i)
       },
       changeMeter() {
         //Muster card
-        this.numbers[1].size = 12
+        this.cards.find(card => card.id == 1).size = 12
       }
     }
   }

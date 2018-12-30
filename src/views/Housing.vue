@@ -1,13 +1,14 @@
 <template>
 	<v-layout wrap>
-		<!-- Activity area -->
-		<v-flex xs12 md4></v-flex>
-
-		<!-- Map area -->
-		<v-flex xs12 md4></v-flex>
+		<!-- Activity and map area -->
+		<v-flex xs12 md8>
+			<activity></activity>
+		</v-flex>
 
 		<!-- Muster area -->
-		<v-flex xs12 md4></v-flex>
+		<v-flex xs12 md4>
+			<muster :id="id"></muster>
+		</v-flex>
 
 		<!-- Event area -->
 		<v-flex xs12 md8>
@@ -72,6 +73,8 @@
 		<v-flex xs12 md4>
 			<hfilter :list="filter.list"></hfilter>
 		</v-flex>
+
+		<!-- Dialog area -->
 		<v-dialog v-model="event.dialog">
 			<v-card>
 				<v-card-title>
@@ -106,6 +109,8 @@
 import evt from '../components/Event.vue'
 import hfilter from '../components/housing/Filter.vue'
 import hform from '../components/housing/Form.vue'
+import activity from '../components/housing/Activity.vue'
+import muster from '../components/housing/Muster.vue'
 export default {
 	props: {
 		id: String
@@ -113,7 +118,9 @@ export default {
 	components: {
 		evt,
 		hfilter,
-		hform
+		hform,
+		activity,
+		muster
 	},
 	data: () => ({
 		filter: {

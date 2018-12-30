@@ -3,7 +3,7 @@
 		<v-card-text>
 			<v-layout wrap>
 				<v-flex xs12>
-					<toggle all multilple type="housing">
+					<toggle all multilple type="h-filter-t">
 					</toggle>
 				</v-flex>
 				<v-flex xs12></v-flex>

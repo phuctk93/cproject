@@ -13,6 +13,16 @@ export default new Vuex.Store({
     host: "http://localhost",
     token: "",
     user: {},
+    overview: {
+      cards: [
+        {id: 0, name: "Manpower", show: false, size: 6, min_size: 6, max_size: 12},
+        {id: 1, name: "Muster", show: false, size: 6, min_size: 6, max_size: 6},
+        {id: 2, name: "Map and activity", show: false, size: 6, min_size: 6, max_size: 12},
+        {id: 3, name: "Incident", show: false, size: 6, min_size: 6, max_size: 12},
+        {id: 4, name: "Victims", show: false, size: 6, min_size: 6, max_size: 12},
+        {id: 5, name: "Support Requisition", show: false, size: 6, min_size: 6, max_size: 12},
+      ]
+    },
     toggles: {
       'icons': [
         { name: "A", active: false },
@@ -26,7 +36,7 @@ export default new Vuex.Store({
         { name: "Housing D", value: "d", active: false},
       ],
       'o-map-l': [
-        { name: "Level 1", value: "1", active: false},
+        { name: "Level 1", value: "1", active: true},
         { name: "Level 2", value: "2", active: false},
         { name: "Level 3", value: "3", active: false},
         { name: "Level 4", value: "4", active: false},
@@ -48,7 +58,7 @@ export default new Vuex.Store({
         { name: "Activity B", value: "b", active: false}
       ],
       'o-incident-d': [
-        { name: "Date/time 1", value: "a", active: false},
+        { name: "Date/time 1", value: "a", active: true},
         { name: "Date/time 2", value: "b", active: false},
         { name: "Date/time 3", value: "c", active: false},
         { name: "Date/time 4", value: "d", active: false},
@@ -112,11 +122,26 @@ export default new Vuex.Store({
         { name: "Housing C", value: "c", active: false},
         { name: "Housing D", value: "d", active: false},
       ],
-      'housing': [
+      'h-form-c': [
         { name: "Class A", value: "a", active: false},
         { name: "Class B", value: "b", active: false},
         { name: "Class C", value: "c", active: false},
         { name: "Class D", value: "d", active: false}
+      ],
+      'h-activity-t': [
+        { name: "Type A", value: "a", active: false},
+        { name: "Type B", value: "b", active: false},
+        { name: "Type C", value: "c", active: false}
+      ],
+      'h-activity-a': [
+        { name: "Activity A", value: "a", active: false},
+        { name: "Activity B", value: "b", active: false}
+      ],
+      'h-filter-t': [
+        { name: "Type A", value: "a", active: false},
+        { name: "Type B", value: "b", active: false},
+        { name: "Type C", value: "c", active: false},
+        { name: "Type D", value: "d", active: false}
       ],
       'manpower-status': [
         { name: "Status A", value: "a", active: false},
@@ -176,6 +201,14 @@ export default new Vuex.Store({
         el.active = true
       })
       console.log(result)
+    },
+    toggleCard (state, i) {
+      var card = state.overview.cards[i]
+      card.show = !card.show
+      card.size = card.show ? card.max_size : card.min_size
+    },
+    moveCards (state, cards) {
+      state.overview.cards = cards
     }
   },
   actions: {

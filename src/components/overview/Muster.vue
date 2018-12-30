@@ -39,7 +39,7 @@
 			:title="barchart.title"
       :labels="barchart.labels" 
       :range="barchart.range" 
-      :values="barchart.values">></Barchart>
+      :values="barchart.values"></Barchart>
     </v-flex>
     <v-flex v-if="full" xs12 md4>
 			<Toggle all multilple type="o-muster-t"></Toggle>
