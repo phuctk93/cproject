@@ -97,7 +97,7 @@ export default {
   stroke: #333;
   stroke-width: 1;
 }
-svg.draggable {
+.draggable {
 	cursor: move;
 }
 </style>

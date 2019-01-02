@@ -179,7 +179,7 @@ export default {
 		},
 		edit(i) {
 			this.event.dialog = true
-			this.event.id = this.id
+			this.event.id = i
 			console.log(i)
 		},
 		add() {
