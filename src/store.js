@@ -23,6 +23,45 @@ export default new Vuex.Store({
         {id: 5, name: "Support Requisition", show: false, size: 6, min_size: 6, max_size: 12},
       ]
     },
+    housing: {
+      '1': {
+        events: [
+        {
+          name: 'Event H1', select: "Location A", contact: "H1", phone: "888",
+          start: new Date(2019, 1, 1, 10, 30, 0, 0),
+          end: new Date(2019, 1, 1, 12, 0, 0, 0)
+        },
+        {
+          name: 'Event H2', select: "Location B", contact: "H2", phone: "111",
+          start: new Date(2019, 1, 1, 9, 30, 0, 0),
+          end: new Date(2019, 1, 2, 11, 0, 0, 0)
+        }
+        ]
+      },
+      '2': {
+        events: [
+        {
+          name: 'Event H2', select: "Location B", contact: "H2", phone: "111",
+          start: new Date(2019, 1, 1, 0, 30, 0, 0),
+          end: new Date(2019, 1, 1, 11, 0, 0, 0)
+        }
+        ]
+      },
+      '3': {
+        events: [
+        {
+          name: 'Event H3', select: "Location C", contact: "H3", phone: "999",
+          start: new Date(2019, 1, 1, 10, 30, 0, 0),
+          end: new Date(2019, 1, 1, 12, 0, 0, 0)
+        },
+        {
+          name: 'Event H1', select: "Location A", contact: "H1", phone: "888",
+          start: new Date(2019, 1, 1, 10, 30, 0, 0),
+          end: new Date(2019, 1, 1, 12, 0, 0, 0)
+        }
+        ]
+      }
+    },
     toggles: {
       'icons': [
         { name: "A", active: false },

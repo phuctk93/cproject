@@ -9,15 +9,24 @@
 			</div>
 		</v-flex>
 		<v-flex xs12>
-			<svg id="svg" class="event" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" :viewBox="'0 0 500 720'">
+			<svg id="svg" class="event" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" :viewBox="'0 0 500 750'">
 			<line x1="0" y1="10" x2="100%" y2="10"></line>
 			<line x1="20" y1="10" x2="20" :y2="750"></line>
 			<text v-for="i in 24" :key="'l'+i" x="0" :y="i * 30">{{i - 1}}</text>
-			<rect class="draggable" v-for="(e, i) in list" :key="'erect' + i"
-			width="100" :height="30 * (e.endTime - e.startTime)"
-			:x="40 + 120 * i" :y="20 + e.startTime * 30" :fill="locations[e.location].color"
-			@mousedown="startDrag($event, i)" @mousemove="drag" @mouseup="endDrag" @mouseleave="endDrag">
-			</rect>
+			<svg v-for="(e, i) in list" :key="'erect' + i"
+			:x="40 + 100 * i" :y="20 + e.startTime * 30"
+			width="80" :height="30 * (e.endTime - e.startTime)"
+			@mousedown="startDrag($event, i)" @mousemove="drag" @mouseup="endDrag" @mouseleave="endDrag"
+			class="draggable"
+			>
+				<rect	width="80" height="100%"
+				x="0" y="0" :fill="locations[e.location].color"
+				>
+				</rect>
+				<foreignObject x="10" :y="30 * (e.endTime - e.startTime)/2 - 20" width="60">
+					<div style="text-align: center">{{e.name}}</div>
+				</foreignObject>
+			</svg>
 			</svg>
 		</v-flex>
 	</v-layout>
@@ -87,7 +96,7 @@ export default {
   stroke: #333;
   stroke-width: 1;
 }
-rect.draggable {
+svg.draggable {
 	cursor: move;
 }
 </style>

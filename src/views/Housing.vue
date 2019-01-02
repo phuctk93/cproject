@@ -41,7 +41,7 @@
 						</v-date-picker>
 					</v-menu>
 					<v-spacer></v-spacer>
-					<v-btn class="primary">Add</v-btn>
+					<v-btn class="primary" @click="add">Add</v-btn>
 				</v-card-title>
 				<v-card-text>
 					<v-layout wrap>
@@ -94,7 +94,7 @@
 									<h2>Event</h2>
 								</v-card-title>
 								<v-card-text>
-									<hform></hform>
+									<hform :id="event.id"></hform>
 								</v-card-text>
 							</v-card>
 						</v-flex>
@@ -133,14 +133,15 @@ export default {
 			]
 		},
 		event: {
+			id: "",
 			dialog: false,
 			date: new Date().toISOString().substr(0, 10),
 			menu: false,
 			list: [
-				{ startTime: 10, endTime: 23, name: "Event name", location: "a", value: false },
-				{ startTime: 9, endTime: 11, name: "Event name", location: "b", value: false },
-				{ startTime: 0, endTime: 10, name: "Event name", location: "c", value: false },
-				{ startTime: 9, endTime: 13, name: "Event name", location: "d", value: false }
+				{ startTime: 10, endTime: 23, name: "Event name 1", location: "a", value: false },
+				{ startTime: 9, endTime: 11, name: "Event name 2", location: "b", value: false },
+				{ startTime: 0, endTime: 10, name: "Event name 3", location: "c", value: false },
+				{ startTime: 9, endTime: 13, name: "Event name 4", location: "d", value: false }
 			],
 			locations: {
 				"a": { title: "Location A", color: "#f99" },
@@ -177,8 +178,13 @@ export default {
 
 		},
 		edit(i) {
-			console.log(i)
 			this.event.dialog = true
+			this.event.id = this.id
+			console.log(i)
+		},
+		add() {
+			this.event.dialog = true
+			this.event.id = ""
 		}
 	}
 }

@@ -67,18 +67,35 @@
 				></v-text-field>
 			</v-flex>
 			<v-flex xs12>
-				<v-btn :disabled="!valid" @click="submit">submit</v-btn>
-				<v-btn @click="clear">clear</v-btn>
+				<v-btn :disabled="!valid" @click="createOrSave()" class="primary" v-text="id ? 'Save' : 'Create'"></v-btn>
+				<v-btn @click="cancelOrDel()" class="error" v-text="id ? 'Delete' : 'Cancel'"></v-btn>
 			</v-flex>
 		</v-layout>
+		<v-dialog v-model="dialog" max-width="260px">
+			<v-card>
+				<v-card-text>
+					<p v-if="!id">You are about to cancel creation of this event, will you like to proceed?</p>
+					<p v-else>You are about to delete this event, will you like to proceed?”</p>
+				</v-card-text>
+				<v-card-actions>
+					<v-btn @click="yesCancelOrDel" class="primary">YES</v-btn>
+					<v-spacer></v-spacer>
+					<v-btn @click="dialog = false">NO</v-btn>
+				</v-card-actions>
+			</v-card>
+		</v-dialog>
   </v-form>
 </template>
 
 <script>
 export default {
 	name: "hform",
+	props: {
+		id: String
+	},
 	data: () => ({
 		name: "Event name",
+		dialog: false,
 		valid: false,
 		location: [
 			"Location A",
@@ -98,12 +115,28 @@ export default {
 			{ label: "End time", show: false, value: "00:00", formated: "" }
 		]
 	}),
+	mounted() {
+		if (this.id) {
+			var data = this.$store.state.housing[this.id].events
+			this.select = data.select
+			this.name = data.name
+			this.contact = data.contact
+			this.phone = data.phone
+		}
+	},
 	methods: {
-		submit() {
+		createOrSave() {
 
 		},
-		clear() {
-
+		cancelOrDel() {
+			this.dialog = true
+		},
+		yesCancelOrDel() {
+			if (this.id) {
+				//Del finction
+				console.log("DEL event: " + this.id)
+			}
+			this.dialog = false
 		},
 		formatedDate(date) {
 			var d = new Date(date)
