@@ -45,6 +45,12 @@ export default new Router({
           props: true
         },
         {
+          path: '/incident/:id',
+          name: 'incident',
+          component: () => import(/* webpackChunkName: "incident" */ './views/IncidentIcon.vue'),
+          props: true
+        },
+        {
           path: '/victim',
           name: 'victim',
           component: () => import(/* webpackChunkName: "victim" */ './views/Victim.vue')

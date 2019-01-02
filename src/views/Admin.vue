@@ -41,7 +41,7 @@
       <v-toolbar-title>{{ title }}</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn v-for="icon in icons" :key="'icon' + icon.name"
-      @click="icon.active = !icon.active"
+      @click="changeIncident(icon)"
       :outline="!icon.active" class="red"
       >
         {{icon.name}}
@@ -75,9 +75,9 @@
 				{name: "Alert", path: "alert"}
       ],
       icons: [
-        { name: "A", active: false },
-        { name: "B", active: false },
-        { name: "C", active: false },
+        { name: "Incident A", active: false, id: 0 },
+        { name: "Incident B", active: false, id: 1 },
+        { name: "Incident C", active: false, id: 2 },
       ]
     }),
     props: {
@@ -99,6 +99,14 @@
         } else {
           this.$router.push({name: e.path})
         }
+      },
+      changeIncident(e) {
+        this.title = e.name
+        this.$router.push("/incident/" + e.id)
+        this.icons.forEach( i => {
+          i.active = false
+        })
+        this.icons[e.id].active = true
       }
 		}
   }
