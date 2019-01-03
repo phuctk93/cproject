@@ -99,6 +99,9 @@
         } else {
           this.$router.push({name: e.path})
         }
+        this.icons.forEach( i => {
+          i.active = false
+        })
       },
       changeIncident(e) {
         this.title = e.name

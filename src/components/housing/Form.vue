@@ -91,7 +91,8 @@
 export default {
 	name: "hform",
 	props: {
-		id: String
+		hID: String,
+		id: Number
 	},
 	data: () => ({
 		name: "Event name",
@@ -117,11 +118,11 @@ export default {
 	}),
 	mounted() {
 		if (this.id) {
-			var data = this.$store.state.housing[this.id].events
-			this.select = data.select
-			this.name = data.name
-			this.contact = data.contact
-			this.phone = data.phone
+			var data = this.$store.state.housing[this.hID].events
+			this.select = data[this.id].select
+			this.name = data[this.id].name
+			this.contact = data[this.id].contact
+			this.phone = data[this.id].phone
 		}
 	},
 	methods: {

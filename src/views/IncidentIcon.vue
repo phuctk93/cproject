@@ -4,8 +4,9 @@
 			<v-card>
 				<v-card-title>
 					<div class="marquee">
-						<p v-for="i in incidents" :key="i.name"
-							v-text="'[' + i.name + '] ' + 'ON GOING - ' + i.location + ' - ' + i.start"
+						<p v-for="(inc, i) in incidents" :key="i.name"
+						:class="inc.playing ? 'scroll' : 'hide'"
+						v-text="'[' + inc.name + '] ' + 'ON GOING - ' + inc.location + ' - ' + inc.start"
 						>
 						</p>
 					</div>
@@ -86,9 +87,9 @@ export default {
       {x: 149.05418, y: 237.375, signed: false, fill: "#fff", video: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"}
 		],
 		incidents: [
-			{ name: "Incident A", location: "Location A", start: "01/01/2019 03:00" },
-			{ name: "Incident B", location: "Location B", start: "02/01/2019 06:00" },
-			{ name: "Incident C", location: "Location C", start: "03/01/2019 09:00" }
+			{ name: "Incident A", location: "Location A", start: "01/01/2019 03:00", playing: false },
+			{ name: "Incident B", location: "Location B", start: "02/01/2019 06:00", playing: false },
+			{ name: "Incident C", location: "Location C", start: "03/01/2019 09:00", playing: false }
 		],
 		total: 10,
     tableItems: [],
@@ -99,7 +100,25 @@ export default {
 			{ text: 'ID/NAME', value: 'id' },
 			{ text: 'Unit', value: 'unit' },
 		],
+		currentScroll: 0,
+		idInterval: 0
 	}),
+	mounted() {
+		this.idInterval = setInterval( () => {
+			var oldScroll = this.currentScroll
+			if (this.currentScroll < this.incidents.length - 1) {
+				this.currentScroll++
+			} else {
+				this.currentScroll = 0
+			}
+			this.incidents[this.currentScroll].playing = true
+			this.incidents[oldScroll].playing = false
+			console.log(this.currentScroll)
+		}, 10000)
+	},
+	destroyed() {
+		clearInterval(this.idInterval)
+	},
 	watch: {
     pagination: {
       handler () {
@@ -135,10 +154,13 @@ export default {
   overflow: hidden;
   box-sizing: border-box;
 }
-.marquee p {
-    display: inline-block;
-    padding-left: 30%;
-    animation: marquee 10s linear infinite;
+.hide {
+	display: none;
+}
+.scroll {
+  display: inline-block;
+	padding-left: 100%;
+	animation: marquee 10s linear 1;
 }
 @keyframes marquee {
     0%   { transform: translate(0, 0); }

@@ -57,7 +57,7 @@
 								>
 								<template slot="items" slot-scope="props">
 									<tr @click="event.dialog = !event.dialog">
-										<td>{{ props.item.startTime }}</td>
+										<td v-text="timeFormated(props.item.startTime).hour + ':' + timeFormated(props.item.startTime).minute"></td>
 										<td>{{ props.item.location }}</td>
 										<td>{{ props.item.name }}</td>
 									</tr>
@@ -94,7 +94,7 @@
 									<h2>Event</h2>
 								</v-card-title>
 								<v-card-text>
-									<hform :id="event.id"></hform>
+									<hform :id="event.id" :hID="id"></hform>
 								</v-card-text>
 							</v-card>
 						</v-flex>
@@ -144,10 +144,10 @@ export default {
 				{ startTime: 9, endTime: 13, name: "Event name 4", location: "d", value: false }
 			],
 			locations: {
-				"a": { title: "Location A", color: "#f99" },
-				"b": { title: "Location B", color: "#9f9" },
-				"c": { title: "Location C", color: "#99f" },
-				"d": { title: "Location D", color: "#ff0" },
+				"a": { title: "Location A", color: "#f99", id: 0 },
+				"b": { title: "Location B", color: "#9f9", id: 1 },
+				"c": { title: "Location C", color: "#99f", id: 2 },
+				"d": { title: "Location D", color: "#ff0", id: 3 },
 			},
 			headers: [
 				{ text: 'Time', value: 'startTime' },
@@ -166,6 +166,18 @@ export default {
 		saveDate(date) {
 			this.$refs.menu.save(date)
 			this.event.list.reverse()
+		},
+		timeFormated(yourHour) {
+			var h = Math.floor(yourHour)
+			var m = Math.round((yourHour - h) * 60)
+			var fm = m.toString()
+			if (m < 10) {
+				fm = '0' + m
+			}
+			return {
+				hour: h,
+				minute: fm
+			}
 		},
 		drag(data) {
 			var evt = this.event.list[data.i]

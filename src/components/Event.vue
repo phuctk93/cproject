@@ -15,15 +15,17 @@
 			<line x1="20" y1="10" x2="20" :y2="750"></line>
 			<text v-for="i in 24" :key="'l'+i" x="0" :y="i * 30">{{i - 1}}</text>
 			<g v-for="(e, i) in list" :key="'erect' + i"
-			@mousedown="startDrag($event, i)">
+			@mousedown="startDrag($event, i)"
+			class="draggable">
 				<rect	width="80" :height="30 * (e.endTime - e.startTime)"
 				:fill="locations[e.location].color"
-				:x="40 + 100 * i" :y="20 + e.startTime * 30"
-				class="draggable"
+				:x="40 + 100 * locations[e.location].id" :y="20 + e.startTime * 30"
 				:id="'erect' + i"
 				>
 				</rect>
-				<foreignObject :x="50 + 100 * i" :y="30 * (e.startTime + (e.endTime - e.startTime)/2)" width="60">
+				<foreignObject :x="50 + 100 * locations[e.location].id"
+				:y="30 * (e.startTime + (e.endTime - e.startTime)/2)" width="60"
+				>
 					<div style="text-align: center">{{e.name}}</div>
 				</foreignObject>
 			</g>
