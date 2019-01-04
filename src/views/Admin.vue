@@ -84,8 +84,13 @@
       source: String
     },
     mounted() {
-      var now = new Date(Date.now())
-      this.now = now.getDate() + "/" + now.getMonth() + "/" + now.getFullYear() + " " + now.getHours() + ":" + now.getMinutes()
+      var now = new Date(),
+      dd = this.checkZero(now.getDate()),
+      mm = this.checkZero(now.getMonth() + 1),
+      yyyy = this.checkZero(now.getFullYear()),
+      hh = this.checkZero(now.getHours()),
+      mi = this.checkZero(now.getMinutes())
+      this.now = dd + "/" + mm + "/" + yyyy + " " + hh + ":" + mi
     },
 		methods: {
 			logOut() {
@@ -110,6 +115,12 @@
           i.active = false
         })
         this.icons[e.id].active = true
+      },
+      checkZero(data){
+        if (data < 10) {
+          data = "0" + data;
+        }
+        return data;
       }
 		}
   }
