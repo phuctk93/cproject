@@ -152,7 +152,7 @@ export default {
 	computed: {
 		dateFormated() {
 			var date = new Date(this.event.date)
-			return date.toJSON().slice(0,10).split('-').reverse().join('/') + ", " + date.toString().slice(0, 3)
+			return this.$root.dateFormated(date).slice(0, 10) + ", " + date.toString().slice(0, 3)
 		}
 	},
 	methods: {
