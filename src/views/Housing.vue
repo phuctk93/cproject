@@ -71,16 +71,16 @@
 
 		<!-- Filter area -->
 		<v-flex xs12 md4>
-			<hfilter :list="filter.list"></hfilter>
+			<hfilter></hfilter>
 		</v-flex>
 
 		<!-- Dialog area -->
-		<v-dialog v-model="event.dialog">
+		<v-dialog v-model="event.dialog" scrollable>
 			<v-card>
 				<v-card-title>
 					<v-toolbar card class="white">
 						<v-spacer></v-spacer>
-						<v-btn icon @click="dialog = false">
+						<v-btn icon @click="event.dialog = false">
 							<v-icon>close</v-icon>
 						</v-btn>
 					</v-toolbar>
@@ -125,15 +125,6 @@ export default {
 		muster
 	},
 	data: () => ({
-		filter: {
-			dialog: false,
-			list: [
-				{ type: "Type A", id: "Name A", unit: "Unit A",  location: "Location A" },
-				{ type: "Type B", id: "Name B", unit: "Unit B",  location: "Location B" },
-				{ type: "Type C", id: "Name C", unit: "Unit C",  location: "Location C" },
-				{ type: "Type D", id: "Name D", unit: "Unit D",  location: "Location D" }
-			]
-		},
 		event: {
 			id: 0,
 			dialog: false,
