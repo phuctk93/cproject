@@ -35,13 +35,15 @@
         </v-card-text>
       </v-card>
     </v-flex>
-		<v-dialog v-model="dialog">
+		<v-dialog v-model="dialog" scrollable>
 			<v-card>
 				<v-card-title>
-					<v-spacer></v-spacer>
-					<v-btn icon @click="dialog = false">
-						<v-icon>close</v-icon>
-					</v-btn>
+					<v-toolbar card class="white">
+						<v-spacer></v-spacer>
+						<v-btn icon @click="dialog = false">
+							<v-icon>close</v-icon>
+						</v-btn>
+					</v-toolbar>
 				</v-card-title>
 				<v-card-text>
 					<dragcamera

@@ -78,10 +78,12 @@
 		<v-dialog v-model="event.dialog">
 			<v-card>
 				<v-card-title>
-					<v-spacer></v-spacer>
-					<v-btn @click="event.dialog = false" icon>
-						<v-icon>close</v-icon>
-					</v-btn>
+					<v-toolbar card class="white">
+						<v-spacer></v-spacer>
+						<v-btn icon @click="dialog = false">
+							<v-icon>close</v-icon>
+						</v-btn>
+					</v-toolbar>
 				</v-card-title>
 				<v-card-text>
 					<v-layout wrap>

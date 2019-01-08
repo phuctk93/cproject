@@ -29,5 +29,23 @@ router.beforeEach((to, from, next) => {
 new Vue({
   router,
   store,
+  methods: {
+    dateFormated(date) {
+      var now = new Date(date),
+      dd = this.checkZero(now.getDate()),
+      mm = this.checkZero(now.getMonth() + 1),
+      yyyy = this.checkZero(now.getFullYear()),
+      hh = this.checkZero(now.getHours()),
+      mi = this.checkZero(now.getMinutes()),
+      ss = this.checkZero(now.getSeconds())
+      return dd + "/" + mm + "/" + yyyy + " " + hh + ":" + mi + ":" + ss
+    },
+    checkZero(number){
+      if (number < 10) {
+        number = "0" + number;
+      }
+      return number;
+    }
+  },
   render: h => h(App)
 }).$mount('#app')
