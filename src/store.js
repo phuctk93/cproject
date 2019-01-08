@@ -222,8 +222,8 @@ export default new Vuex.Store({
     activeToggle (state, data) {
       var btn = state.toggles[data.type][data.index]
       btn.active = !btn.active
-      var result = state.toggles[data.type].filter(btn => btn.active)
-      console.log(result)
+      /*var result = state.toggles[data.type].filter(btn => btn.active)
+      console.log(result)*/
     },
     activeSingleToggle (state, data) {
       var result = state.toggles[data.type]
@@ -232,14 +232,14 @@ export default new Vuex.Store({
       })
       var btn = result[data.index]
       btn.active = true
-      console.log(result)
+      //console.log(result)
     },
     allToggle (state, type) {
       var result = state.toggles[type]
       result.forEach(el => {
-        el.active = true
+        el.active = false
       })
-      console.log(result)
+      //console.log(result)
     },
     toggleCard (state, i) {
       var card = state.overview.cards[i]

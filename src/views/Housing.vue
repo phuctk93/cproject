@@ -86,7 +86,7 @@
 				<v-card-text>
 					<v-layout wrap>
 						<v-flex xs12 md8 class="autoscroll">
-							<evt v-on:drag="drag" :locations="event.locations" :list="event.list"></evt>
+							<evt :id="event.id" v-on:drag="drag" :locations="event.locations" :list="event.list"></evt>
 						</v-flex>
 						<v-flex xs12 md4>
 							<v-card>
@@ -133,7 +133,7 @@ export default {
 			]
 		},
 		event: {
-			id: "",
+			id: 0,
 			dialog: false,
 			date: new Date().toISOString().substr(0, 10),
 			menu: false,
@@ -192,11 +192,10 @@ export default {
 		edit(i) {
 			this.event.dialog = true
 			this.event.id = i
-			console.log(i)
 		},
 		add() {
 			this.event.dialog = true
-			this.event.id = ""
+			this.event.id = 0
 		}
 	}
 }

@@ -19,6 +19,7 @@
 			class="draggable">
 				<rect	width="80" :height="30 * (e.endTime - e.startTime)"
 				:fill="locations[e.location].color"
+				:fill-opacity="currentEvent(i)"
 				:x="40 + 100 * locations[e.location].id" :y="20 + e.startTime * 30"
 				:id="'erect' + i"
 				>
@@ -38,7 +39,8 @@ export default {
 	name: "evt",
 	props: {
 		list: Array,
-		locations: Object
+		locations: Object,
+		id: Number
 	},
 	data: () => ({
 		current: 0,
@@ -78,7 +80,6 @@ export default {
 			this.selectedElement = null
 			this.dragging = false
 			this.startingPos = []
-			console.log("Leave")
 		},
 		getMousePosition(evt) {
 			var CTM = this.svg.getScreenCTM();
@@ -87,6 +88,12 @@ export default {
 				y: (evt.clientY - CTM.f) / CTM.d
 			};
 		},
+		currentEvent(i) {
+			if (this.id != null) {
+				return this.id == i ? 1 : 0.2
+			}
+			return 1
+		}
 	}
 }
 </script>

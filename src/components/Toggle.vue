@@ -1,7 +1,7 @@
 <template>
 	<v-layout row wrap>
 		<v-flex>
-			<v-btn v-if="all" color="blue" @click="toggleAll()" dark small>{{allBtn.name}}</v-btn>
+			<v-btn v-if="all" color="blue" @click="toggleAll()" :outline="!allBtn.active" dark small>{{allBtn.name}}</v-btn>
 			<v-btn v-for="(btn, i) in list" :key="btn.name" @click="toggle(i)" color="blue" :outline="!btn.active" :dark="btn.active" small>
 				{{btn.name}}
 			</v-btn>
@@ -38,6 +38,7 @@ export default {
 			var result = { type: this.type, index: i}
 			if (this.multilple) {
 				this.$store.commit("activeToggle", result)
+				this.allBtn.active = false
 			} else {
 				this.$store.commit("activeSingleToggle", result)
 			}
