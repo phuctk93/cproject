@@ -17,10 +17,10 @@
 		<v-flex xs12 md8>
 			<v-layout wrap>
 				<v-flex xs12>
-					<toggle all type="manpower-status"></toggle>
-					<toggle all type="manpower-skill"></toggle>
-					<toggle all type="manpower-unit"></toggle>
-					<toggle all type="manpower-housing"></toggle>
+					<toggle all multilple type="manpower-status"></toggle>
+					<toggle all multilple type="manpower-skill"></toggle>
+					<toggle all multilple type="manpower-unit"></toggle>
+					<toggle all multilple type="manpower-housing"></toggle>
 				</v-flex>
 				<v-flex xs12>
 					<v-data-table
