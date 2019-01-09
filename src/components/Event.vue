@@ -107,6 +107,6 @@ export default {
   stroke-width: 1;
 }
 .draggable {
-	cursor: move;
+	cursor: pointer;
 }
 </style>

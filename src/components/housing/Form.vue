@@ -139,14 +139,10 @@ export default {
 			}
 			this.dialog = false
 		},
-		formatedDate(date) {
-			var d = new Date(date)
-			return d.toJSON().slice(0,10).split('-').reverse().join('/')
-		},
 		save(index, value) {
 			var date = this.date[index]
 			if (index % 2 == 0) {
-				date.formated = this.formatedDate(value)
+				date.formated = this.$root.dateFormated(value).slice(0, 10)
 			} else {
 				date.formated = this.date[index].value
 			}

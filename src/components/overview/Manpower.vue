@@ -61,7 +61,7 @@
 											<div class="px-2">
 											<div class="mb-1">
 												<b>Name: </b>
-												<span>{{item.id}}</span>
+												<span>{{item.name}}</span>
 											</div>
 											<div class="mb-1">
 												<b>Rank: </b>
