@@ -48,7 +48,7 @@
 						</v-btn>
 					</v-toolbar>
 				</v-card-title>
-				<v-card-text v-if="dialogName == 'cam'">
+				<v-card-text v-if="dialogName == 'cam'" class="pa-4">
 					<dragcamera
 					:editable="true"
 					:cameras="cameras"
@@ -296,6 +296,7 @@ export default {
         start = Date.parse(this.date[0].value + " " + this.date[1].value)
         end = Date.parse(this.date[2].value + " " + this.date[3].value)
       }
+      this.dialog = false
       //Send to server start and end
       console.log("start: " + start + ", end: " + end)
     },

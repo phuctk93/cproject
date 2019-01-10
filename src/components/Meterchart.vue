@@ -17,6 +17,10 @@
 		</circle>
 		</g>
 
+<!-- add text
+		<text :x="lenghtToPos(v_away, 60).x" :y="lenghtToPos(v_away, 60).y">{{away}}</text>
+		<text :x="lenghtToPos(v_present, 60).x" :y="lenghtToPos(v_present, 60).y">{{present - away}}</text>
+!-->
 		<text class="total" x="50%" y="150" text-anchor="middle">{{total}}</text>
 		<text class="title" x="50%" y="180" text-anchor="middle">{{title}}</text>
 
@@ -46,6 +50,15 @@ export default {
 		total() {
 			return this.present
 		} 
+	},
+	methods: {
+		//S is lenght of arc, r is radius of circle
+		lenghtToPos(s, r) {
+			return {
+				x: (120 - r) + (r * Math.cos(s/r)),
+				y: 100 - (r * Math.sin(s/r))
+			}
+		}
 	}
 }
 </script>

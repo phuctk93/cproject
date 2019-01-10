@@ -131,10 +131,10 @@ export default {
 			date: new Date().toISOString().substr(0, 10),
 			menu: false,
 			list: [
-				{ startTime: 10, endTime: 23, name: "Event name 1", location: "a", value: false },
-				{ startTime: 9, endTime: 11, name: "Event name 2", location: "b", value: false },
-				{ startTime: 0, endTime: 10, name: "Event name 3", location: "c", value: false },
-				{ startTime: 9, endTime: 13, name: "Event name 4", location: "d", value: false }
+				{ x: 0, startTime: 10, endTime: 23, name: "Event name 1", location: "a", value: false },
+				{ x: 0, startTime: 9, endTime: 11, name: "Event name 2", location: "b", value: false },
+				{ x: 0, startTime: 0, endTime: 10, name: "Event name 3", location: "c", value: false },
+				{ x: 0, startTime: 9, endTime: 13, name: "Event name 4", location: "d", value: false }
 			],
 			locations: {
 				"a": { title: "Location A", color: "#f99", id: 0 },
@@ -154,6 +154,11 @@ export default {
 			var date = new Date(this.event.date)
 			return this.$root.dateFormated(date).slice(0, 10) + ", " + date.toString().slice(0, 3)
 		}
+	},
+	mounted() {
+		this.event.list.forEach(e => {
+			e.x = this.locationToPos(e.location)
+		})
 	},
 	methods: {
 		saveDate(date) {
@@ -175,12 +180,14 @@ export default {
 		drag(data) {
 			var evt = this.event.list[data.i]
 			var offset = evt.endTime - evt.startTime
-			var svgPos = data.y / 30
-			if (svgPos >= 0 && (svgPos + offset) < 24) {
-				evt.startTime = data.y/30
+			var svgPos = {x: data.x, y: data.y / 30}
+			if (svgPos.y >= 0 && (svgPos.y + offset) < 24) {
+				evt.startTime = svgPos.y
 				evt.endTime = offset + evt.startTime
 			}
-
+			if (svgPos.x >= 40 && svgPos.x <= 380) {
+				evt.x = svgPos.x
+			}
 		},
 		edit(i) {
 			this.event.dialog = true
@@ -188,7 +195,18 @@ export default {
 		},
 		add() {
 			this.event.dialog = true
-			this.event.id = 0
+			this.event.list.push({
+				startTime: 0,
+				endTime: 5,
+				name: "New event",
+				location: "a",
+				value: false,
+				x: this.locationToPos("a")
+			})
+			this.event.id = this.event.list.length - 1
+		},
+		locationToPos(i) {
+			return 40 + 100 * this.event.locations[i].id
 		}
 	}
 }

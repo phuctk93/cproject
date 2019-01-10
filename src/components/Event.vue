@@ -20,11 +20,11 @@
 				<rect	width="80" :height="30 * (e.endTime - e.startTime)"
 				:fill="locations[e.location].color"
 				:fill-opacity="currentEvent(i)"
-				:x="40 + 100 * locations[e.location].id" :y="20 + e.startTime * 30"
+				:x="e.x" :y="20 + e.startTime * 30"
 				:id="'erect' + i"
 				>
 				</rect>
-				<foreignObject :x="50 + 100 * locations[e.location].id"
+				<foreignObject :x="e.x + 10"
 				:y="30 * (e.startTime + (e.endTime - e.startTime)/2)" width="60"
 				>
 					<div style="text-align: center">{{e.name}}</div>
@@ -76,6 +76,26 @@ export default {
 		endDrag() {
 			if (!this.dragging) {
 				this.$emit("edit", this.current)
+			}
+			var evt = this.list[this.current]
+			var x = Math.floor((evt.x - 40) / 100)
+			evt.x = 40 + x * 100
+			switch (x) {
+				case 0:
+					evt.location = "a"
+					break;
+				case 1:
+					evt.location = "b"
+					break;
+				case 2:
+					evt.location = "c"
+					break;
+				case 3:
+					evt.location = "d"
+					break;
+				default:
+					evt.location = "a"
+					break;
 			}
 			this.selectedElement = null
 			this.dragging = false

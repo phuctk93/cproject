@@ -37,7 +37,7 @@
 				<div v-else-if="editable && !cam.link" @drop="dropCamera(i)" @dragover="allowDrop" style="width: 100%; font-size: 3em; text-align: center; border: #777 dotted">
 					Drop here
 				</div>
-				<v-btn v-if="editable" @click="addCamera()" class="primary">Add another camera</v-btn>
+				<v-btn v-if="editable" @click="addCamera()" class="primary" :disabled="cameras.length >= 5">Add another camera</v-btn>
 				<v-btn
 					v-if="editable"
           color="red"

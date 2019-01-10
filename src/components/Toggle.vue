@@ -25,6 +25,11 @@ export default {
 			active: true
 		},
 	}),
+	mounted() {
+		if (this.all) {
+			this.toggleAll()
+		}
+	},
 	computed: {
 		list() {
 			return this.$store.state.toggles[this.type]
