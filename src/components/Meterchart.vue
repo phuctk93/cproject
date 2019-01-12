@@ -2,10 +2,15 @@
 	<div class="m-chart" @click="$emit('click')">
 		<svg class="meter" xmlns="http://www.w3.org/2000/svg"
     preserveAspectRatio="none"
-    viewBox="0 0 240 200">
+    viewBox="0 0 300 200">
 
-		<g class="circle" transform="rotate(180, 120, 100)">
-		<circle id="low" r="100" cx="50%" cy="50" :stroke="color" stroke-width="20" stroke-dasharray="150 22 30 22 30 22 38 628" fill="none">
+		<text text-anchor="middle" :x="lenghtToPos(0.5, 130).x" :y="lenghtToPos(0.5, 130).y">OC</text>
+		<text text-anchor="middle" :x="lenghtToPos(0.7, 130).x" :y="lenghtToPos(0.7, 130).y">DC</text>
+		<text text-anchor="middle" :x="lenghtToPos(0.9, 130).x" :y="lenghtToPos(0.9, 130).y">MTOC</text>
+		<text text-anchor="middle" :x="lenghtToPos(1, 130).x" :y="lenghtToPos(1, 130).y">MTL</text>
+
+		<g class="circle" transform="rotate(180, 150, 100)">
+		<circle id="low" r="100" cx="50%" cy="50" :stroke="color" stroke-width="15" stroke-dasharray="150 20 30 20 30 20 44 628" fill="none">
 		</circle>
 
 		<circle r="80" cx="50%" cy="50" stroke="#ccc" stroke-width="12" stroke-dasharray="502.4" :stroke-dashoffset="v_present" fill="none">
@@ -17,10 +22,9 @@
 		</circle>
 		</g>
 
-<!-- add text
-		<text :x="lenghtToPos(v_away, 60).x" :y="lenghtToPos(v_away, 60).y">{{away}}</text>
-		<text :x="lenghtToPos(v_present, 60).x" :y="lenghtToPos(v_present, 60).y">{{present - away}}</text>
-!-->
+		<text text-anchor="middle" :x="lenghtToPos(away / max / 2, 60).x" :y="lenghtToPos(away / max / 2, 60).y">{{away}}</text>
+		<text text-anchor="middle" :x="lenghtToPos((present + away) / 2 / max, 60).x" :y="lenghtToPos((present + away) / 2 / max, 60).y">{{present - away}}</text>
+
 		<text class="total" x="50%" y="150" text-anchor="middle">{{total}}</text>
 		<text class="title" x="50%" y="180" text-anchor="middle">{{title}}</text>
 
@@ -53,10 +57,10 @@ export default {
 	},
 	methods: {
 		//S is lenght of arc, r is radius of circle
-		lenghtToPos(s, r) {
+		lenghtToPos(percent, r) {
 			return {
-				x: (120 - r) + (r * Math.cos(s/r)),
-				y: 100 - (r * Math.sin(s/r))
+				x: 150 + (r * Math.cos(3.14 * percent + 3.14)),
+				y: 150 + (r * Math.sin(3.14 * percent + 3.14))
 			}
 		}
 	}
