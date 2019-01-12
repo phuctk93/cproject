@@ -17,7 +17,8 @@
 							<dragcamera
 								@click="dialog = true"
 								:cameras="cameras"
-								:circles="circles">
+								:circles="circles"
+								:map="housingMap">
 							</dragcamera>
 						</v-flex>
 						<v-flex xs12 md4>
@@ -57,7 +58,9 @@
 					<dragcamera
 					editable
 					:cameras="cameras"
-					:circles="circles">
+					:circles="circles"
+					:map="housingMap"
+					>
 					</dragcamera>
 				</v-card-text>
 			</v-card>
@@ -88,6 +91,7 @@ export default {
       {x: 177.02443, y: 63.505955, signed: false, fill: "#fff", video: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"},
       {x: 149.05418, y: 237.375, signed: false, fill: "#fff", video: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"}
 		],
+		housingMap: require('../assets/housing.png'),
 		incidents: [
 			{ name: "Incident A", location: "Location A", start: "01/01/2019 03:00", playing: false },
 			{ name: "Incident B", location: "Location B", start: "02/01/2019 06:00", playing: false },

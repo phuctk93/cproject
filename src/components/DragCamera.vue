@@ -10,7 +10,7 @@
 				<g transform="translate(81.416069,-19.981247)">
 					<image
 					sodipodi:absref="housing.png"
-					:xlink:href="require('../assets/housing.png')"
+					:xlink:href="map"
 					width="371.47501"
 					height="247.12083"
 					id="image4644"
@@ -64,7 +64,8 @@ export default {
 	props: {
 		editable: Boolean,
 		cameras: Array,
-		circles: Array
+		circles: Array,
+		map: String
 	},
 	data: () => ({
 		currentID: 0

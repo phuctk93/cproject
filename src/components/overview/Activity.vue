@@ -7,7 +7,8 @@
       <dragcamera
       @click="showDialog('cam')"
       :cameras="cameras"
-      :circles="circles">
+      :circles="circles"
+      :map="housingMap">
       </dragcamera>
     </v-flex>
     <v-flex xs12 md4>
@@ -52,7 +53,9 @@
 					<dragcamera
 					:editable="true"
 					:cameras="cameras"
-					:circles="circles">
+					:circles="circles"
+          :map="housingMap"
+          >
 					</dragcamera>
 				</v-card-text>
         <v-card-text v-if="dialogName == 'personel'">
@@ -230,6 +233,7 @@ export default {
       {x: 177.02443, y: 63.505955, signed: false, fill: "#fff", video: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"},
       {x: 149.05418, y: 237.375, signed: false, fill: "#fff", video: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"}
     ],
+    housingMap: require('@/assets/housing.png'),
     list: [
       { title: "HU/Type/Activity", date: "01/01/2019 12:00", description: "Description"},
       { title: "HU/Type/Activity", date: "01/01/2019 12:00", description: "Description"},
