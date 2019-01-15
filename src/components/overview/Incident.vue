@@ -195,8 +195,9 @@ export default {
 				tm += m
 				th += h
 			})
+			tm = tm + Math.floor(ts / 60)
 			th = th + Math.floor(tm / 60)
-			tm = tm % 60 + Math.floor(ts / 60)
+			tm = tm % 60
 			ts = ts % 60
 			return th + ":" + tm + ":" + ts
 		},
