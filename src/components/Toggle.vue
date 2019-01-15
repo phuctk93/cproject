@@ -47,10 +47,12 @@ export default {
 			} else {
 				this.$store.commit("activeSingleToggle", result)
 			}
+			this.$emit("toggle", {name: this.type, res: this.$store.getters.activeFilter(this.type)})
 		},
 		toggleAll() {
 			this.allBtn.active = true
 			this.$store.commit("allToggle", this.type)
+			this.$emit("toggle", {name: this.type, res: this.$store.state.toggles[this.type]})
 		}
 	}
 }
