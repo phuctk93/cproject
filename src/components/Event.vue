@@ -9,7 +9,7 @@
 			</div>
 		</v-flex>
 		<v-flex xs12>
-			<svg id="svg" class="event" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" :viewBox="'0 0 500 750'"
+			<svg :id="name" class="event" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" :viewBox="'0 0 500 750'"
 			@mouseup="endDrag" @mouseleave="endDrag" @mousemove="drag">
 			<line x1="0" y1="10" x2="100%" y2="10"></line>
 			<line x1="20" y1="10" x2="20" :y2="750"></line>
@@ -40,7 +40,8 @@ export default {
 	props: {
 		list: Array,
 		locations: Object,
-		id: Number
+		id: Number,
+		name: String
 	},
 	data: () => ({
 		current: 0,
@@ -51,7 +52,7 @@ export default {
 		svg: {}
 	}),
 	mounted() {
-		this.svg = document.getElementById("svg")
+		this.svg = document.getElementById(this.name)
 	},
 	methods: {
 		startDrag(evt, i) {

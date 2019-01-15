@@ -54,7 +54,7 @@
 						</v-btn>
 					</v-toolbar>
 				</v-card-title>
-				<v-card-text>
+				<v-card-text class="pa-4">
 					<dragcamera
 					editable
 					:cameras="cameras"
